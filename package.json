@@ -1,5 +1,5 @@
 {
-  "name": "beloty_api",
+  "name": "evaluation_api",
   "version": "1.0.0",
   "main": "target/index.js",
   "author": "Safisyx <safisyx@gmail.com>",
