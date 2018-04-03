@@ -16,7 +16,7 @@ export class Batch extends BaseEntity {
 
   @IsDate()
   @Column('date')
-  end: Date
+  endDate: Date
 
   @OneToMany(_ => Student, student => student.batch, {eager:true})
   students: Student[]
