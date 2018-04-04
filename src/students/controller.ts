@@ -3,6 +3,7 @@ import {
   Body, Patch
 } from 'routing-controllers'
 import { Batch} from './entities'
+import {sortEval} from '../lib/functions'
 
 @JsonController()
 export default class GameController {
@@ -38,11 +39,7 @@ export default class GameController {
       ...batch,
       students: batch.students.map(student=>({
         ...student,
-        evaluations: student.evaluations.sort((a,b)=>{
-          if (b.date>a.date)
-            return -1
-          return 1
-        })
+        evaluations: sortEval(student.evaluations)
         }
       ))
     }
