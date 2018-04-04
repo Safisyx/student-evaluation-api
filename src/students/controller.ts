@@ -3,7 +3,7 @@ import {
   Body, Patch
 } from 'routing-controllers'
 import { Batch} from './entities'
-import {sortEval} from '../lib/functions'
+import {sortEval, getColorPercentage, getLastColors} from '../lib/functions'
 
 @JsonController()
 export default class GameController {
@@ -35,13 +35,19 @@ export default class GameController {
   ) {
     const batch = await Batch.findOneById(id)
     if (!batch) throw new NotFoundError('Batch not found')
+    const lastColors = getLastColors(batch.students)
     return {
       ...batch,
       students: batch.students.map(student=>({
         ...student,
         evaluations: sortEval(student.evaluations)
         }
-      ))
+      )),
+      colorsPercentage: {
+        red: getColorPercentage(lastColors,'red'),
+        green: getColorPercentage(lastColors,'green'),
+        yellow: getColorPercentage(lastColors,'yellow')
+      }
     }
   }
 }
