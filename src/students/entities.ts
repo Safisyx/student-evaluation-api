@@ -41,7 +41,7 @@ export class Student extends BaseEntity {
   batch: Batch
 
   @OneToMany(_ => Evaluation, evaluation => evaluation.student, {eager:true})
-  evaluation: Evaluation[]
+  evaluations: Evaluation[]
 }
 
 @Entity()
@@ -61,6 +61,6 @@ export class Evaluation extends BaseEntity {
   @Column('text', {nullable: true})
   remark: string
 
-  @ManyToOne(_ => Student, student => student.evaluation)
+  @ManyToOne(_ => Student, student => student.evaluations)
   student: Student
 }
