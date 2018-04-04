@@ -34,6 +34,17 @@ export default class GameController {
   ) {
     const batch = await Batch.findOneById(id)
     if (!batch) throw new NotFoundError('Batch not found')
-    return batch
+    return {
+      ...batch,
+      students: batch.students.map(student=>({
+        ...student,
+        evaluations: student.evaluations.sort((a,b)=>{
+          if (b.date>a.date)
+            return -1
+          return 1
+        })
+        }
+      ))
+    }
   }
 }
