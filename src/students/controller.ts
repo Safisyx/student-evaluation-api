@@ -18,4 +18,22 @@ export default class GameController {
     if (!entity) throw new NotFoundError('Batch has not been created')
     return entity
   }
+
+  @Authorized()
+  @Get('/batches')
+  async getBatches(
+  ){
+    const batches = await Batch.find()
+    return batches.filter(b=>b.id>0)
+  }
+
+  @Authorized()
+  @Get('/batches/:id')
+  async getBatch(
+    @Param('id') id:number
+  ) {
+    const batch = await Batch.findOneById(id)
+    if (!batch) throw new NotFoundError('Batch not found')
+    return batch
+  }
 }
