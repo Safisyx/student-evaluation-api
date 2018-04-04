@@ -19,7 +19,7 @@ export const getLastColors = (students) => {
 }
 
 export const getColorPercentage = (colors, color:string) => {
-  const p = colors.filter(c=>c===color).length*100
+  const p = colors.length===0? 0: colors.filter(c=>c===color).length*100
          /colors.length
   return Math.round(p*100)/100
 }

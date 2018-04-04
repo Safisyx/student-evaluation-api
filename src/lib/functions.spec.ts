@@ -94,10 +94,24 @@ describe('getColorPercentage', () => {
 
   expect(getColorPercentage(colors,'red')).toBe(50)
   })
-  
+
   test('Get around 33.33 for "green" if 1/3 of them are green', () => {
     const colors =['red','red','yellow','green','red','green']
 
   expect(getColorPercentage(colors,'green')).toBe(33.33)
+  })
+
+  test('Get 0 for "yellow" is there is no "yellow"', () => {
+    const colors=['red','red']
+
+  expect(getColorPercentage(colors,'yellow')).toBe(0)
+  })
+
+  test('Get 0 for every color if there is no color', () => {
+    const colors=[]
+
+  expect(getColorPercentage(colors,'green')===0 &&
+         getColorPercentage(colors,'red')===0 &&
+         getColorPercentage(colors,'yellow')===0).toBe(true)
   })
 })
