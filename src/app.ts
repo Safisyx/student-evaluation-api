@@ -2,13 +2,15 @@ import 'reflect-metadata'
 import {Action, BadRequestError, createKoaServer} from "routing-controllers"
 import teacherController from './teachers/controller'
 import loginController from './logins/controller'
+import studentController from './students/controller'
 import {verify} from './jwt'
 
 export default createKoaServer({
   cors: true,
   controllers: [
     teacherController,
-    loginController
+    loginController,
+    studentController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization
