@@ -28,6 +28,7 @@ describe('studentsController', () => {
 
   test('POST /students/batches/:batchId', async () => {
       const student = {
+        id:-1,
         name:'Ultimate Test',
         photo: 'testPicture.png'
       }
@@ -39,4 +40,18 @@ describe('studentsController', () => {
             .set('Authorization', `Bearer ${sign({id:999})}`)
             .expect(201)
     })
+
+  test('PATCH /students/:id' , async () => {
+    const update = {
+      name: 'Test Me',
+      photo: 'test.jpg'
+    }
+    const entity = await request(await app.callback())
+          .patch(`/students/${-1}`)
+          .set('Accept', 'application/json')
+          .send(update)
+          .set('Authorization', `Bearer ${sign({id:999})}`)
+          .expect(200)
+
+  })
 })

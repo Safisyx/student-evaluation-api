@@ -64,4 +64,18 @@ export default class GameController {
     const entity = await Student.create({...student, batch}).save()
     return await Student.findOneById(entity.id)
   }
+
+  @Authorized()
+  @Patch('/students/:id')
+  async editStudent(
+    @Param('id') id: number,
+    @Body() {name, photo}
+  ) {
+    const student = await Student.findOneById(id)
+    if (!student) throw new NotFoundError('Student not exist')
+    if (name) student.name=name
+    if (photo) student.photo=photo
+    await student.save()
+    return student
+  }
 }
