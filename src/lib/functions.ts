@@ -12,9 +12,8 @@ export const getLastColors = (students) => {
       const ev = sortEval(student.evaluations)
       if (ev.length>0)
         return ev[ev.length-1].code
-      return '0'
+      return 'inherit'
     })
-    .filter(e=>(e!=='0'))
   return colors
 }
 
