@@ -22,3 +22,27 @@ export const getColorPercentage = (colors, color:string) => {
          /colors.length
   return Math.round(p*100)/100
 }
+
+//From now on, take an array of students as arguments
+export const filterGreen = (students) => {
+  return students.filter(student => {
+    const evLength = student.evaluations.length
+    console.log(evLength)
+    return (evLength>0 && student.evaluations[evLength-1].code==='green')
+  })
+}
+
+export const filterYellow = (students) => {
+  return students.filter(student => {
+    const evLength = student.evaluations.length
+    return (evLength>0 && student.evaluations[evLength-1].code==='yellow')
+  })
+}
+
+export const filterRedOrNoEvaluation = (students) => {
+  return students.filter(student => {
+    const evLength = student.evaluations.length
+    return ((evLength>0 && student.evaluations[evLength-1].code==='red')||
+             evLength===0)
+  })
+}

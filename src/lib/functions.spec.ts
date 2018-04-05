@@ -1,5 +1,5 @@
 import 'jest'
-import {sortEval, getColorPercentage, getLastColors} from './functions'
+import {sortEval, getColorPercentage, getLastColors, filterGreen, filterRedOrNoEvaluation} from './functions'
 
 describe('sortEval', () => {
   test('Exchange if the first element happend last', () => {
@@ -113,5 +113,169 @@ describe('getColorPercentage', () => {
   expect(getColorPercentage(colors,'green')===0 &&
          getColorPercentage(colors,'red')===0 &&
          getColorPercentage(colors,'yellow')===0).toBe(true)
+  })
+})
+
+describe('filterGreen', () => {
+  test('Works if there are green evaluations', () => {
+
+    const students = [{
+        id:1,
+        name:'test1',
+        evaluations: [{
+            id: 2,
+            date: '2018-03-02',
+            code: 'red'
+          },{
+            id: 3,
+            date: '2018-07-01',
+            code: 'green'
+          }
+       ]
+     },{
+       id:2,
+       name:'test2',
+       evaluations: [{
+           id: 4,
+           date: '2018-03-02',
+           code: 'red'
+         },{
+           id: 5,
+           date: '2018-01-01',
+           code: 'green'
+         },{
+           id:6,
+           date: '2018-06-03',
+           code: 'yellow'
+         }
+      ]
+    },{
+      id:3,
+      name:'test3',
+      evaluations: [{
+          id: 10,
+          date: '2018-03-02',
+          code: 'red'
+        },{
+          id: 9,
+          date: '2018-05-01',
+          code: 'green'
+        }
+     ]
+    }
+    ]
+
+   expect(filterGreen(students).length).toEqual(2)
+  })
+
+  test('Works if there are no green evaluations', () => {
+
+    const students = [{
+        id:1,
+        name:'test1',
+        evaluations: [
+       ]
+     },{
+       id:2,
+       name:'test2',
+       evaluations: [{
+           id: 4,
+           date: '2018-03-02',
+           code: 'red'
+         },{
+           id: 5,
+           date: '2018-01-01',
+           code: 'green'
+         },{
+           id:6,
+           date: '2018-06-03',
+           code: 'yellow'
+         }
+      ]
+    },{
+      id:3,
+      name:'test3',
+      evaluations: [{
+          id: 10,
+          date: '2018-03-02',
+          code: 'red'
+        },{
+          id: 9,
+          date: '2018-05-01',
+          code: 'yellow'
+        }
+     ]
+    }
+    ]
+
+   expect(filterGreen(students).length).toEqual(0)
+  })
+})
+
+describe('filterRedOrNoEvaluation', () => {
+  test('Works if there are no evaluations', () => {
+
+    const students = [{
+        id:1,
+        name:'test1',
+        evaluations: [
+       ]
+     },{
+       id:2,
+       name:'test2',
+       evaluations: [
+      ]
+    },{
+      id:3,
+      name:'test3',
+      evaluations: [
+     ]
+    }
+    ]
+
+   expect(filterRedOrNoEvaluation(students).length).toEqual(3)
+  })
+
+  test('Works if there are reds evaluations', () => {
+
+    const students = [{
+        id:1,
+        name:'test1',
+        evaluations: [
+       ]
+     },{
+       id:2,
+       name:'test2',
+       evaluations: [{
+           id: 4,
+           date: '2018-03-02',
+           code: 'red'
+         },{
+           id: 5,
+           date: '2018-01-01',
+           code: 'red'
+         },{
+           id:6,
+           date: '2018-06-03',
+           code: 'yellow'
+         }
+      ]
+    },{
+      id:3,
+      name:'test3',
+      evaluations: [{
+          id: 10,
+          date: '2018-03-02',
+          code: 'red'
+        },{
+          id: 9,
+          date: '2018-05-01',
+          code: 'yellow'
+        }
+     ]
+    }
+    ]
+
+   expect(filterRedOrNoEvaluation(students).length).toEqual(1)
   })
 })
