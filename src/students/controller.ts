@@ -80,6 +80,17 @@ export default class GameController {
   }
 
   @Authorized()
+  @Get('/students/:id')
+  async getStudent(
+    @Param('id') id:number
+  ) {
+    const student = await Student.findOneById(id)
+    if (!student) throw new NotFoundError('Student does not exist')
+
+    return student
+  }
+
+  @Authorized()
   @Delete('/students/:id')
   async deleteStudent(
     @Param('id') id: number
