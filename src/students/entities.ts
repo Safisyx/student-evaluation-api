@@ -1,4 +1,4 @@
-import { BaseEntity, PrimaryColumn, PrimaryGeneratedColumn, Column, Entity, OneToMany, ManyToOne } from 'typeorm'
+import { BaseEntity, PrimaryColumn, PrimaryGeneratedColumn, Column, Entity, OneToMany, ManyToOne, RelationId } from 'typeorm'
 import {IsInt, IsString, Min, MinLength, IsDate} from 'class-validator'
 export type Color = 'red'|'yellow'|'green';
 
@@ -40,6 +40,9 @@ export class Student extends BaseEntity {
   @ManyToOne(_ => Batch, batch => batch.students)
   batch: Batch
 
+  @RelationId((student: Student)=> student.batch)
+  batchId: number
+
   @OneToMany(_ => Evaluation, evaluation => evaluation.student, {eager:true})
   evaluations: Evaluation[]
 }
@@ -63,4 +66,7 @@ export class Evaluation extends BaseEntity {
 
   @ManyToOne(_ => Student, student => student.evaluations)
   student: Student
+
+  @RelationId((evaluation: Evaluation)=> evaluation.student)
+  studentId: number
 }
