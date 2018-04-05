@@ -120,9 +120,13 @@ export default class GameController {
     const evaluation = await Evaluation.findOne({student,date:update.date})
     if (!evaluation){
       const entity = await Evaluation.create({...update, student}).save()
-      return await Evaluation.findOneById(entity.id)
+      return {
+        post: await Evaluation.findOneById(entity.id)
+      }
     }
     evaluation.code=update.code
-    return await evaluation.save()
+    return{
+      patch: await evaluation.save()
+    }
   }
 }
