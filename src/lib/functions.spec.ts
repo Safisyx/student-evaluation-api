@@ -1,5 +1,6 @@
 import 'jest'
-import {sortEval, getColorPercentage, getLastColors, filterGreen, filterRedOrNoEvaluation} from './functions'
+import {sortEval, getColorPercentage, getLastColors,
+        filterGreen, filterRedOrNoEvaluation, randomPick} from './functions'
 
 describe('sortEval', () => {
   test('Exchange if the first element happend last', () => {
@@ -277,5 +278,139 @@ describe('filterRedOrNoEvaluation', () => {
     ]
 
    expect(filterRedOrNoEvaluation(students).length).toEqual(1)
+  })
+})
+
+describe('randomPick', () => {
+  test('should get value if students is not empty', () => {
+
+    const students = [{
+        id:1,
+        name:'test1',
+        evaluations: [{
+            id: 2,
+            date: '2018-03-02',
+            code: 'red'
+          },{
+            id: 3,
+            date: '2018-07-01',
+            code: 'green'
+          }
+       ]
+     },{
+       id:2,
+       name:'test2',
+       evaluations: [{
+           id: 4,
+           date: '2018-03-02',
+           code: 'red'
+         },{
+           id: 5,
+           date: '2018-01-01',
+           code: 'green'
+         },{
+           id:6,
+           date: '2018-06-03',
+           code: 'yellow'
+         }
+      ]
+    },{
+      id:3,
+      name:'test3',
+      evaluations: [{
+          id: 10,
+          date: '2018-03-02',
+          code: 'red'
+        },{
+          id: 9,
+          date: '2018-05-01',
+          code: 'green'
+        }
+     ]
+    }
+    ]
+
+   expect(randomPick(students)!==null).toBe(true)
+  })
+
+  test('should get value if students is not empty', () => {
+
+    const students = [
+      {
+          id:1,
+          name:'test1',
+          evaluations: []
+       },{
+         id:2,
+         name:'test2',
+         evaluations: []
+      },{
+        id:3,
+        name:'test3',
+        evaluations: []
+      }
+    ]
+
+   expect(randomPick(students)!==null).toBe(true)
+  })
+
+  test('should get value if all evaluations are green', () => {
+
+    const students = [{
+        id:1,
+        name:'test1',
+        evaluations: [{
+            id: 2,
+            date: '2018-03-02',
+            code: 'red'
+          },{
+            id: 3,
+            date: '2018-07-01',
+            code: 'green'
+          }
+       ]
+     },{
+       id:2,
+       name:'test2',
+       evaluations: [{
+           id: 4,
+           date: '2018-03-02',
+           code: 'red'
+         },{
+           id: 5,
+           date: '2018-01-01',
+           code: 'green'
+         },{
+           id:6,
+           date: '2018-06-03',
+           code: 'green'
+         }
+      ]
+    },{
+      id:3,
+      name:'test3',
+      evaluations: [{
+          id: 10,
+          date: '2018-03-02',
+          code: 'red'
+        },{
+          id: 9,
+          date: '2018-05-01',
+          code: 'green'
+        }
+     ]
+    }
+    ]
+
+   expect(randomPick(students)!==null).toBe(true)
+  })
+
+  test('should get one if no student has been evaluated', () => {
+
+    const students = [
+
+    ]
+
+   expect(randomPick(students)===null).toBe(true)
   })
 })

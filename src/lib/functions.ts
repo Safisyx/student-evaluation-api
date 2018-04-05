@@ -46,3 +46,28 @@ export const filterRedOrNoEvaluation = (students) => {
              evLength===0)
   })
 }
+
+export const randomPick = (students) => {
+  const random = Math.floor((Math.random() * 100) + 1);
+  if (students.length === 0) return null
+  let filtered
+  let pick
+  if (random<=53) {
+    filtered = filterRedOrNoEvaluation(students)
+    if (filtered.length === 0) randomPick(students)
+    pick = Math.floor(Math.random() * filtered.length)
+    return filtered[pick]
+  }
+  if (random>53 && random<=(53+28)) {
+    filtered = filterYellow(students)
+    if (filtered.length === 0) randomPick(students)
+    pick = Math.floor(Math.random() * filtered.length)
+    return filtered[pick]
+  }
+  if (random>(53+28)) {
+    filtered = filterGreen(students)
+    if (filtered.length === 0) randomPick(students)
+    pick = Math.floor(Math.random() * filtered.length)
+    return filtered[pick]
+  }
+}
