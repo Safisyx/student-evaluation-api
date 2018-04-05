@@ -27,7 +27,6 @@ export const getColorPercentage = (colors, color:string) => {
 export const filterGreen = (students) => {
   return students.filter(student => {
     const evLength = student.evaluations.length
-    console.log(evLength)
     return (evLength>0 && student.evaluations[evLength-1].code==='green')
   })
 }
@@ -54,19 +53,20 @@ export const randomPick = (students) => {
   let pick
   if (random<=53) {
     filtered = filterRedOrNoEvaluation(students)
-    if (filtered.length === 0) randomPick(students)
+    if (filtered.length === 0) {return randomPick(students)}
     pick = Math.floor(Math.random() * filtered.length)
     return filtered[pick]
   }
   if (random>53 && random<=(53+28)) {
     filtered = filterYellow(students)
-    if (filtered.length === 0) randomPick(students)
+    if (filtered.length === 0) {return randomPick(students)}
     pick = Math.floor(Math.random() * filtered.length)
+
     return filtered[pick]
   }
   if (random>(53+28)) {
     filtered = filterGreen(students)
-    if (filtered.length === 0) randomPick(students)
+    if (filtered.length === 0) {return randomPick(students)}
     pick = Math.floor(Math.random() * filtered.length)
     return filtered[pick]
   }

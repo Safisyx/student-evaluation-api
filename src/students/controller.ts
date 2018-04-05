@@ -3,7 +3,7 @@ import {
   Body, Patch, Delete
 } from 'routing-controllers'
 import { Batch, Student, Evaluation} from './entities'
-import {sortEval, getColorPercentage, getLastColors} from '../lib/functions'
+import {sortEval, getColorPercentage, getLastColors, randomPick} from '../lib/functions'
 
 @JsonController()
 export default class GameController {
@@ -128,5 +128,14 @@ export default class GameController {
     return{
       patch: await evaluation.save()
     }
+  }
+
+//Can be public because there is no interaction with the database
+//Just to make sure to have the logic in the backend
+  @Post('/students/random')
+  getRandom(
+    @Body() students
+  ){
+    return randomPick(students)
   }
 }
