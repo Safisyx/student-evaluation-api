@@ -1,6 +1,6 @@
 import {
   JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get,
-  Body, Patch
+  Body, Patch, Delete
 } from 'routing-controllers'
 import { Batch, Student} from './entities'
 import {sortEval, getColorPercentage, getLastColors} from '../lib/functions'
@@ -77,5 +77,18 @@ export default class GameController {
     if (photo) student.photo=photo
     await student.save()
     return student
+  }
+
+  @Authorized()
+  @Delete('/students/:id')
+  async deleteStudent(
+    @Param('id') id: number
+  ){
+    const student = await Student.findOneById(id)
+    if (!student) throw new NotFoundError('Student not exist')
+    await student.remove()
+    return {
+      message: 'Succefully removed'
+    }
   }
 }

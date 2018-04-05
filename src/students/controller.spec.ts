@@ -54,4 +54,13 @@ describe('studentsController', () => {
           .expect(200)
 
   })
+
+  test('DELETE /students/:id' , async () => {
+      await request(await app.callback())
+          .delete(`/students/${-1}`)
+          .set('Accept', 'application/json')
+          .set('Authorization', `Bearer ${sign({id:999})}`)
+          .expect(200)
+
+  })
 })
