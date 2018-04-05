@@ -55,6 +55,34 @@ describe('studentsController', () => {
 
   })
 
+  test('POST /evaluations/students/:studentId should post a new one if it is not there yet', async () => {
+    const update = {
+      code: 'green',
+      date: '2018-01-01'
+    }
+    let res
+    const entity = await request(await app.callback())
+          .post(`/evaluations/students/${-1}`)
+          .set('Accept', 'application/json')
+          .send(update)
+          .set('Authorization', `Bearer ${sign({id:999})}`)
+          .expect(200)
+  })
+
+  test('POST /evaluations/students/:studentId should patch if it is already there', async () => {
+    const update = {
+      code: 'red',
+      date: '2018-01-01'
+    }
+    let res
+    const entity = await request(await app.callback())
+          .post(`/evaluations/students/${-1}`)
+          .set('Accept', 'application/json')
+          .send(update)
+          .set('Authorization', `Bearer ${sign({id:999})}`)
+          .expect(200)
+  })
+
   test('DELETE /students/:id' , async () => {
       await request(await app.callback())
           .delete(`/students/${-1}`)

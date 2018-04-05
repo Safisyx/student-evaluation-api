@@ -2,7 +2,7 @@ import {
   JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get,
   Body, Patch, Delete
 } from 'routing-controllers'
-import { Batch, Student} from './entities'
+import { Batch, Student, Evaluation} from './entities'
 import {sortEval, getColorPercentage, getLastColors} from '../lib/functions'
 
 @JsonController()
@@ -86,9 +86,32 @@ export default class GameController {
   ){
     const student = await Student.findOneById(id)
     if (!student) throw new NotFoundError('Student not exist')
+
+    //First delete evaluations
+    const evaluations = await Evaluation.find({student})
+    await evaluations.forEach(evaluation => evaluation.remove())
+
     await student.remove()
     return {
       message: 'Succefully removed'
     }
+  }
+
+  @Authorized()
+  @Post('/evaluations/students/:studentId')
+  async addEvaluation(
+    @Param('studentId') studentId: number,
+    @Body() update
+  ) {
+    const student= await Student.findOneById(studentId)
+    if (!student) throw new NotFoundError('Student not found')
+
+    const evaluation = await Evaluation.findOne({student,date:update.date})
+    if (!evaluation){
+      const entity = await Evaluation.create({...update, student}).save()
+      return await Evaluation.findOneById(entity.id)
+    }
+    evaluation.code=update.code
+    return await evaluation.save()
   }
 }
