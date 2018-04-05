@@ -25,4 +25,18 @@ describe('studentsController', () => {
             .expect(201)
 
     })
+
+  test('POST /students/batches/:batchId', async () => {
+      const student = {
+        name:'Ultimate Test',
+        photo: 'testPicture.png'
+      }
+      const batchId = -1
+      const entity = await request(await app.callback())
+            .post(`/students/batches/${batchId}`)
+            .set('Accept', 'application/json')
+            .send(student)
+            .set('Authorization', `Bearer ${sign({id:999})}`)
+            .expect(201)
+    })
 })

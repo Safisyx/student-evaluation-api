@@ -2,7 +2,7 @@ import {
   JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get,
   Body, Patch
 } from 'routing-controllers'
-import { Batch} from './entities'
+import { Batch, Student} from './entities'
 import {sortEval, getColorPercentage, getLastColors} from '../lib/functions'
 
 @JsonController()
@@ -49,5 +49,19 @@ export default class GameController {
         yellow: getColorPercentage(lastColors,'yellow')
       }
     }
+  }
+
+  @Authorized()
+  @Post('/students/batches/:batchId')
+  @HttpCode(201)
+  async addStudent(
+    @Param('batchId') batchId: number,
+    @Body() student
+  ) {
+    const batch= await Batch.findOneById(batchId)
+    if (!batch) throw new NotFoundError('Batch not found')
+
+    const entity = await Student.create({...student, batch}).save()
+    return await Student.findOneById(entity.id)
   }
 }
