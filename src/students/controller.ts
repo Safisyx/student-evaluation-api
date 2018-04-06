@@ -1,5 +1,5 @@
 import {
-  JsonController, Authorized, Post, Param, HttpCode, NotFoundError, Get,
+  JsonController, Authorized, Post, Param, HttpCode, NotFoundError, BadRequestError, Get,
   Body, Patch, Delete
 } from 'routing-controllers'
 import { Batch, Student, Evaluation} from './entities'
@@ -14,6 +14,7 @@ export default class GameController {
   async createBatch(
     @Body() batch
   ) {
+    if (batch.endDate<batch.startDate) throw new BadRequestError('Incompatible dates')
     await Batch.create(batch).save()
     const entity = Batch.findOneById(batch.id)
     if (!entity) throw new NotFoundError('Batch has not been created')
