@@ -18,7 +18,12 @@
       "node_modules/@types"
     ],
     "outDir": "target/",
-    "rootDir": "src/"
+    "rootDir": "src/",
+    "lib": [
+      "esnext",
+      "es2015",
+      "dom"
+    ]
   },
   "include": [
     "src/**/*"
