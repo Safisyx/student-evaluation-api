@@ -17,7 +17,7 @@ describe('studentsController', () => {
             endDate: '2018-05-05'
         }
 
-       const response =  await request(await app.callback())
+        await request(await app.callback())
             .post('/batches')
             .set('Accept', 'application/json')
             .send(batch)
@@ -33,7 +33,7 @@ describe('studentsController', () => {
         photo: 'testPicture.png'
       }
       const batchId = -1
-      const entity = await request(await app.callback())
+      await request(await app.callback())
             .post(`/students/batches/${batchId}`)
             .set('Accept', 'application/json')
             .send(student)
@@ -46,7 +46,7 @@ describe('studentsController', () => {
       name: 'Test Me',
       photo: 'test.jpg'
     }
-    const entity = await request(await app.callback())
+    await request(await app.callback())
           .patch(`/students/${-1}`)
           .set('Accept', 'application/json')
           .send(update)
@@ -60,8 +60,7 @@ describe('studentsController', () => {
       code: 'green',
       date: '2018-01-01'
     }
-    let res
-    const entity = await request(await app.callback())
+    await request(await app.callback())
           .post(`/evaluations/students/${-1}`)
           .set('Accept', 'application/json')
           .send(update)
@@ -74,8 +73,7 @@ describe('studentsController', () => {
       code: 'red',
       date: '2018-01-01'
     }
-    let res
-    const entity = await request(await app.callback())
+    await request(await app.callback())
           .post(`/evaluations/students/${-1}`)
           .set('Accept', 'application/json')
           .send(update)
