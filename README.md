@@ -1,5 +1,5 @@
 # student-evaluation-api
-Backend for https://github.com/Safisyx/evaluation-client ((Node, TypeScript, TypeORM))
+Backend for https://github.com/Safisyx/evaluation-client (Node, TypeScript, TypeORM)  
 This was the final individual evaluation at [codaisseur](https://codaisseur.com). The goal is to create an app to allow 
 teachers to daily evaluate students by assigning a color green (on track), yellow(rather good) or red(need attention). 
 
