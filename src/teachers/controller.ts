@@ -1,4 +1,4 @@
-import { JsonController, Post, Body, HttpCode } from 'routing-controllers'
+import { JsonController, Post, Body, HttpCode, BadRequestError } from 'routing-controllers'
 import Teacher from './entity';
 
 @JsonController()
@@ -10,6 +10,8 @@ export default class UserController {
       @Body() teacher: Teacher
     ) {
       const {password, ...rest} = teacher
+      const t = await Teacher.findOneById({email:teacher.email})
+      if (!t) throw new BadRequestError('Already exists')
       const entity = Teacher.create(rest)
       await entity.setPassword(password)
       return entity.save()
