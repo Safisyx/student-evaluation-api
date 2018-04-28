@@ -4,6 +4,7 @@ request
   .post(`${baseUrl}/teachers`)
   .send({email:'super@example.com', password:'SuperUser'})
   .then(result=>{
+    console.log(`${result.body}`)
     console.log('Successfully created')
   })
   .catch(err=>{
