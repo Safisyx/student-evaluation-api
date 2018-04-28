@@ -10,8 +10,8 @@ export default class UserController {
       @Body() teacher: Teacher
     ) {
       const {password, ...rest} = teacher
-      const t = await Teacher.findOneById({email:teacher.email})
-      if (!t) throw new BadRequestError('Already exists')
+      const t = await Teacher.findOne({email:rest.email})
+      if (t) throw new BadRequestError('Already exists')
       const entity = Teacher.create(rest)
       await entity.setPassword(password)
       return entity.save()
